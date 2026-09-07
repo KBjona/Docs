@@ -20,32 +20,26 @@ This allows us to use `line()` and `curve()` directly instead of writing `Paths.
 
 ### Creating a Line
 
-Create a variable to store the path just under your poses, again not in any methods:
+Create a method to return your path just under your poses:
 
 ```java
 //poses from before
 
-private Path path; //not in a method so it is accessible anywhere
-```
-
-We'll create the path when the OpMode starts, so add these lines in your start method:
-
-```java
-@Override
-public void start() {
-    path = line(startPose, endPose) //path 
-            .linear(startPose, endPose); // heading interpolation
+private Path park() {
+    return line(startPose, park).linear(startPose, park);
 }
+
 ```
+
 
 Lets break down the parts of the path quickly
 
-`line()` creates a straight path from `startPose` to `endPose`.
+`line()` creates a straight path from `startPose` to `park`.
 
-The `.linear()` part is our Interpolation. It changes the robot's heading from the heading of `startPose` to the heading of `endPose` while it moves along the path. You can play around with this on the visualiser
+The `.linear()` part is our Interpolation. It changes the robot's heading from the heading of `startPose` to the heading of `park` while it moves along the path. You can play around with this on the visualiser
 
 <Callout title="Tip" type="info">
-    Paths default to **tangtiental** (like tank drive) heading if you don't add any interpolation. See [Interpolation](/docs/pathing/reference/interpolation) for the available options.
+    Paths default to **tangtiental** (robot faces the direction it is driving) heading if you don't add any interpolation. See [Interpolation](/docs/pathing/reference/interpolation) for the available options.
 </Callout>
 
 ### Creating a Curve
@@ -55,17 +49,15 @@ You can also create curved paths with `curve()`.
 First, create a control Pose with your other poses:
 
 ```java
-// other poses
-private final Pose controlPose = p.of(36, 60, 45);
+// other poses...
+private final Pose controlPose = poseFactory.of(36, 60, 45);
 ```
 
 Then we can create a curve by adding the `controlPose` in the middle of our other two poses:
 
 ```java
-@Override
-public void start() {
-    Path curvePath = curve(startPose, controlPose, endPose)
-        .linear(startPose, endPose);
+private Path park() {
+    return curve(startPose, controlPose, park).linear(startPose, park);
 }
 ```
 
@@ -74,8 +66,7 @@ The first and last Poses are the start and end of the curve. Any Poses between t
 For our first autonomous, we'll continue using the straight path:
 
 ```java
-path = line(startPose, endPose)
-        .linear(startPose, endPose);
+line(startPose, park).linear(startPose, park);
 ```
 
 For more path options, see [Path Creation](/docs/pathing/reference/api). For more information about curves, see [Bezier Curves](/docs/pathing/reference/beziercurves).

@@ -41,7 +41,7 @@ private final PoseFactory p = PoseFactory.degrees(); // the factory we added bef
 
 // our poses
 private final Pose startPose = p.of(24, 24, 0);
-private final Pose endPose = p.of(48, 48, 90);
+private final Pose park = p.of(48, 48, 90);
 ```
 
 The values are entered in this order:
@@ -50,7 +50,7 @@ The values are entered in this order:
 p.of(x, y, heading);
 ```
 
-So `startPose` is at `(24, 24)` facing `0` degrees, and `endPose` is at `(48, 48)` facing `90` degrees.
+So `startPose` is at `(24, 24)` facing `0` degrees, and `park` is at `(48, 48)` facing `90` degrees.
 
 ### Setting the Starting Pose
 
@@ -76,6 +76,6 @@ For more technical information about `PoseFactory`, see the [Pose Factory](/docs
 
 ### Next Step
 
-Now that we have `startPose` and `endPose`, we can create a path between them.
+Now that we have `startPose` and `park`, we can create a path between them.
 
 Continue to [Creating a Path](/docs/pathing/guide/path-creation).
