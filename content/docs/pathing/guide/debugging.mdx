@@ -33,6 +33,7 @@ String drivetrainString = follower.debug().drivetrain().toString();
 telemetry.addLine(drivetrainString);
 telemetry.update();
 ```
+Similarly, the "algorithm string" can be accessed with `follower.debug().algorithm().toString()` and the "localizer string" can be accessed with `follower.debug().localizer().toString();`.
 
 ### Follower String
 The `Follower` also has its own debug string for the `FollowerLog` that contains all the debug maps and additional data.

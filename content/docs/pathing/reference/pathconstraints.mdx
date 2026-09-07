@@ -13,7 +13,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 A value of `1` means no bias. Values greater than `1` allow the controller to overshoot the target, while values less than `1` bias it to undershoot instead. This is useful if you don't need to brake fully. For example, if an obstacle or wall will help slow the robot down, since undershooting on purpose gives you a margin against overshooting into it.
 
-The default value is `1.0`.
+The default value is `1.0`. If your robot is undershooting, lower this value. Otherwise, if you are trying to optimize your path-following speed, increasing this value is a great way to speed things up.
 
 ```java
 c.brakeAggression.set(1.0);
