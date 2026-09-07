@@ -10,7 +10,7 @@
     "foresightoptions",
     "beziercurves",
     "velocity",
-    "follow-state",
-    "logging"
+    "logging",
+    "controllers"
   ]
 }
