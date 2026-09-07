@@ -1,5 +1,5 @@
 ---
-title: Debug Strings
+title: Debugging
 description: How to Print Pedro's states
 ---
 
@@ -35,13 +35,12 @@ telemetry.update();
 ```
 
 ### Follower String
-The `Follower` also has its own debug string for the `FollowerLog` that contains all of the debug maps and additional data.
+The `Follower` also has its own debug string for the `FollowerLog` that contains all the debug maps and additional data.
 
 You may access the follower string with the `follower.debug().toString()` method.
 
 <Callout title="Tip" type="info">
-    Alternatively, if you call `follower.withLogger(log -> telemetry.addData("Follower Log", log));` once in `start` or `init`, the `Follower` will automatically print its debug string to telemetry.
-    You will still need to call `telemetry.update()` yourself. See [Logging](/docs/pathing/reference/logging) for more details.
+   You can use a `Consumer<FollowerLog>` to log the follower's debug information easily. See [Logging](/docs/pathing/reference/logging) for more details.
 </Callout>
 
 
