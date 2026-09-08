@@ -28,14 +28,15 @@ For this guide, we'll use degrees for our heading values. Add this line after wh
 public class ExampleAuto extends OpMode {
 
     private Follower follower; // you added this before
-    private final PoseFactory p = PoseFactory.degrees(); //add this
+    private final PoseFactory p = PoseFactory.degrees(); // add this
 ```
 
 You can use `PoseFactory.radians()` instead if you prefer radians.
 
 ### Creating the Poses
 
-We'll create one Pose for where the robot starts and another for where we want it to go. Poses should be declared outside of any method, so they are accessible anywhere:
+We'll create two Poses specifying the startpoint and endpoint of the path we want the robot to follow.
+Poses should be declared outside of any method, so that they are accessible anywhere:
 
 ```java
 private final PoseFactory p = PoseFactory.degrees(); // the factory we added before, we are still at the top of the class
