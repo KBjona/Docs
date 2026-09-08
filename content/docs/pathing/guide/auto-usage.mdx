@@ -164,7 +164,9 @@ public class ExampleAuto extends OpMode {
         Scheduler.execute();
         // add your other methods needed in the loop here
 
-        telemetry.addData("Pose", follower.pose());
+        telemetryData.addData("X", follower.pose().x());
+        telemetryData.addData("Y", follower.pose().y());
+        telemetryData.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Follower Mode", follower.mode());
         telemetry.update();
     }
