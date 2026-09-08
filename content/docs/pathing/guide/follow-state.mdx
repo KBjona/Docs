@@ -37,7 +37,7 @@ The `Follower` exposes several methods that allow you to monitor the robot's fol
 - `follower.distanceToEndpoint()` gives you the Cartesian distance from the robot to the endpoint of the path.
 - `follower.closestPose()` gives you the closest pose on the path to the robot.
 - `follower.pathIndex()` gives you the index of the current segment of the path you are following. For instance, if you've chained 3 paths together, it may tell you that you're following the second one.
-- `follower.currentCurve()` gives you the `Curve` object your robot is currently following
-- `follower.currentPath()` gives you the `Path` object your robot is currently following
+- `follower.currentCurve()` gives you the `Curve` object your robot is currently following.
+- `follower.currentPath()` gives you the `Path` object your robot is currently following.
 
 There are several more, but experience using Pedro Pathing will make it easier to know which one you need.
