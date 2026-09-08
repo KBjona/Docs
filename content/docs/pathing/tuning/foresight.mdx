@@ -14,7 +14,7 @@ Inside your `Tuning` class, add:
 ```java title="Tuning.java"
 @Tuner
 public static Procedure foresightTuner() {
-    return new ForesightTuner((hardwareMap) -> new PinpointLocalizer(hardwareMap, Constants.localizerConfig), (hardwareMap) -> new Mecanum(hardwareMap, Constants.driveConfig));
+    return new ForesightTuner((hardwareMap) -> new PinpointLocalizer(hardwareMap, Constants.localizerConfig), (hardwareMap) -> new Mecanum(hardwareMap, Constants.drivetrainConfig));
 }
 ```
 

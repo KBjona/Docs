@@ -9,7 +9,7 @@ Before creating our paths, we first need a `Follower`.
 
 The follower controls the drivetrain, keeps track of the robot's position using the localizer, and runs the path following algorithm configured in your `Constants` file.
 
-If you haven't configured your robot yet, see the [Constants](/docs/pathing/constants) page first.
+If you haven't configured your robot yet, see the [Constants](/docs/pathing/tuning/constants) page first.
 
 <Callout title="Tuning" type="warning">
   This guide assumes you have tuned your robot already, if you haven't, please [tune your robot](/docs/pathing/tuning)
@@ -52,7 +52,7 @@ First, import the `Follower` and your `Constants` file:
 ```java
 import com.pedropathing.follower.Follower;
 
-import org.firstinspires.ftc.teamcode.pedroPathing.Constants; //Should match your file location
+import org.firstinspires.ftc.teamcode.pedro.Constants; //Should match your file location
 ```
 
 Then create a follower variable inside your OpMode:
