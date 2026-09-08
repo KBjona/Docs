@@ -11,7 +11,7 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 `brakeAggression` controls how much overshoot is allowed when the robot commits to braking at the end of a segment.
 
-A value of `1` means no bias. Values greater than `1` allow the controller to overshoot the target, while values less than `1` bias it to undershoot instead. This is useful if you don't need to brake fully. For example, if an obstacle or wall will help slow the robot down, since undershooting on purpose gives you a margin against overshooting into it.
+A value of `1` means no bias. Values greater than `1` allow the controller to overshoot the target, while values less than `1` bias it to undershoot instead. This is useful if you don't want to brake fully. For example, if you know an obstacle or wall will help slow the robot down, you can use a higher value for faster pathing. You can also use a lower value if you don't want the robot to slam into whatever is at the target position.
 
 The default value is `1.0`. If your robot is undershooting, lower this value. Otherwise, if you are trying to optimize your path-following speed, increasing this value is a great way to speed things up.
 
@@ -45,15 +45,21 @@ c.maxAccelerationConstraint.set(40.0); // inches/second^2
 
 `maxVelocityConstraint` caps the robot's target velocity while coasting, independent of the drivetrain's own maximum achievable speed.
 
-There is no constraint by default so the drivetrain would simply be constrained by its physical capabilites.
+There is no constraint by default so the drivetrain would simply be constrained by its physical capabilities.
 
 ```java
 c.maxVelocityConstraint.set(30.0); // inches/second
 ```
 
 <Callout type="info">
-`setPathSpeed(speed)` is a convenience `Modifier` that sets `maxVelocityConstraint` as a fraction of the robot's max achievable forward velocity, e.g. `setPathSpeed(0.75)` caps the path at 75% of top speed.
+`maxPathSpeed` limits the path velocity as a fraction of the robot's
+maximum achievable velocity. For example, `0.75` limits the path to 75%
+of the current max achievable speed.
+
+`maxVelocityConstraint` limits the path velocity to an absolute value in
+units per second. If both are set, the lower resulting velocity is used.
 </Callout>
+
 
 ### Max Deceleration
 
@@ -65,11 +71,24 @@ There is no constraint by default which means no constraint for the robot's dece
 c.maxDecelerationConstraint.set(50.0); // inches/second^2
 ```
 
+### Max Deceleration Scale
+
+`maxDecelerationScale` limits how quickly the robot's target velocity may
+decrease while coasting, as a fraction of the robot's natural deceleration.
+
+The default value is `ForesightConfig.Constraint.NONE`, which disables this relative deceleration limit.
+
+```java
+c.maxDecelerationScale.set(0.8);
+```
+
+When both `maxDecelerationConstraint` and `maxDecelerationScale` are enabled the lower limit is used.
+
 ### Coast-down Velocity
 
 `coastDownToVelocity` sets the speed that **Max Deceleration** slows down to instead of slowing all the way to zero.
 
-It only works when maxDecelerationConstraint has a finite value. If it is still on default value this setting has no effect.
+It only works when `maxDecelerationConstraint` has a finite value. If it is still on default value this setting has no effect.
 
 This is useful when you want the robot to slow down to a low speed and keep moving until the follower starts braking normally, instead of stopping too early.
 
