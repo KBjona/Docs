@@ -4,9 +4,9 @@
     "pose-creation",
     "path-creation",
     "path-following",
-    "follow-state",
     "auto-usage",
     "teleop-usage",
+    "follow-state",
     "debugging"
   ]
 }

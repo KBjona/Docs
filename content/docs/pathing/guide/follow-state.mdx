@@ -41,3 +41,44 @@ The `Follower` exposes several methods that allow you to monitor the robot's fol
 - `follower.currentPath()` gives you the `Path` object your robot is currently following.
 
 There are several more, but experience using Pedro Pathing will make it easier to know which one you need.
+
+Lets add some of these to our Autonomous mode!
+
+From the Autonomous guide, your loop method will look similar to this: 
+
+```java title="ExampleAuto.java"
+// from the example code at the end of the autonomous page
+@Override
+public void loop() {
+    follower.update();
+    Scheduler.execute();
+    // add your other methods needed in the loop here
+    telemetryData.addData("X", follower.pose().x());
+    telemetryData.addData("Y", follower.pose().y());
+    telemetryData.addData("Heading", Math.toDegrees(follower.pose().heading()));
+    telemetry.addData("Follower Mode", follower.mode());
+    telemetry.update();
+}
+```
+
+We can add a couple to our telemetry to see them acting in real time, in reality you would use these for your own commands and subsystems. And don't add too much telemetry to your OpModes, it will harm your loop times.
+```java title="ExampleAuto.java"
+// from the example code at the end of the autonomous page
+@Override
+public void loop() {
+    follower.update();
+    Scheduler.execute();
+    // add your other methods needed in the loop here
+    telemetryData.addData("X", follower.pose().x());
+    telemetryData.addData("Y", follower.pose().y());
+    telemetryData.addData("Heading", Math.toDegrees(follower.pose().heading()));
+    telemetry.addData("Follower Mode", follower.mode());
+
+    // We will add these two, but you can use the many other follower methods aswell in your own code!
+    telemetry.addData("Path completion", follower.completion());
+    telemetry.addData("Distance remaining in path", follower.remainingDistance());
+    telemetry.update();
+}
+```
+
+You can now see how much of the path you have completed and the remaining distance to drive in your telemetry! The other many follower methods can be used in your subsystems easily
