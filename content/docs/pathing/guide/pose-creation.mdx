@@ -1,12 +1,13 @@
 ---
 title: Creating a Pose
+description: How to create poses with PoseFactory
 ---
 
-Now that the follower is set up, we need to define positions for our autonomous.
+<Callout title="Prerequisites" type="warning">
+    This page assumes that you have read and completed the previous step: [Setting Up Your Autonomous](/docs/pathing/guide/setting-up-auto). Read it if you haven't already.
+</Callout>
 
-This guide follows on from the previous one, [Setting Up Your Autonomous](/docs/pathing/guide/setting-up-auto). Read it if you haven't already.
-
-Now we have our autonomous class and follower setup, its time to start pathing. To do this we need Poses. 
+Now that we have our Autonomous class and follower setup, it's time to start pathing. To do this we need to use `Pose`s. 
 
 A `Pose` represents a position and heading on the field using three values: `x`, `y`, and `heading`. We use the [Pedro Coordinates](/docs/pathing/reference/coordinates) system instead of the [FTC official coordinate system](https://ftc-docs.firstinspires.org/en/latest/game_specific_resources/field_coordinate_system/field-coordinate-system.html).
 
@@ -21,20 +22,21 @@ import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 ```
 
-For this guide, we'll use degrees for our heading values. Add this line after where you inititialised your follower:
+For this guide, we'll use degrees for our heading values. Add this line after where you inititialized your follower:
 
 ```java
-public class ExampleAuto implements OpMode {
+public class ExampleAuto extends OpMode {
 
     private Follower follower; // you added this before
-    private final PoseFactory p = PoseFactory.degrees(); //add this
+    private final PoseFactory p = PoseFactory.degrees(); // add this
 ```
 
 If you prefer radians, you can use `PoseFactory.radians()` instead.
 
 ### Creating the Poses
 
-We'll create one Pose for where the robot starts and another for where we want it to go. Poses should be declared outside of any method, so they are accessible anywhere:
+We'll create two Poses specifying the startpoint and endpoint of the path we want the robot to follow.
+Poses should be declared outside of any method, so that they are accessible anywhere:
 
 ```java
 private final PoseFactory p = PoseFactory.degrees(); // the factory we added before, we are still at the top of the class

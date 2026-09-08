@@ -30,8 +30,8 @@ For a larger autonomous, create the Poses the robot needs to visit:
 private final PoseFactory poseFactory = PoseFactory.degrees();
 
 private final Pose startPose = poseFactory.of(24, 24, 0);
-private final Pose startToScore = poseFactory.of(48, 48, 90);
-private final Pose park = poseFactory.of(72, 48, 90);
+private final Pose scorePose = poseFactory.of(48, 48, 90);
+private final Pose parkPose = poseFactory.of(72, 48, 90);
 ```
 
 
@@ -118,7 +118,7 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 
 @Autonomous
-public class ExampleAuto implements OpMode {
+public class ExampleAuto extends OpMode {
     private Follower follower;
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
@@ -164,7 +164,9 @@ public class ExampleAuto implements OpMode {
         Scheduler.execute();
         // add your other methods needed in the loop here
 
-        telemetry.addData("Pose", follower.pose());
+        telemetryData.addData("X", follower.pose().x());
+        telemetryData.addData("Y", follower.pose().y());
+        telemetryData.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Follower Mode", follower.mode());
         telemetry.update();
     }

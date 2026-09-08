@@ -21,15 +21,15 @@ Your `create` function should look like this:
 ```java
 public static Follower create(HardwareMap h) {
     return new Follower(
-    new PinpointLocalizer(h, localizerConfig),
-    new Mecanum(h, drivetrainConfig),
-    new Foresight(foresightConfig)
+        new PinpointLocalizer(h, localizerConfig),
+        new Mecanum(h, drivetrainConfig),
+        new Foresight(foresightConfig)
     );
 }
 ```
 
 <Callout title="Important" type="warning">
-    Make sure that the **Localizer** and **Drivetrain** that you send into the new Follower match your own.
+    Ensure that the **Localizer** and **Drivetrain** that you send into the new Follower match your own.
 </Callout>
 
 Below is an example of a complete `Constants` file. The different tuning pages will guide
@@ -107,12 +107,11 @@ public class Constants {
 
     public static Follower create(HardwareMap h) {
         return new Follower(
-        new PinpointLocalizer(h, localizerConfig),
-        new Mecanum(h, drivetrainConfig),
-        new Foresight(foresightConfig)
+            new PinpointLocalizer(h, localizerConfig),
+            new Mecanum(h, drivetrainConfig),
+            new Foresight(foresightConfig)
         );
     }
 }
-```
 
-Now that we have finished tuning the robot, we can [test](/docs/pathing/tuning/test) everything combined.
+After tuning the robot, we can now [test](/docs/pathing/tuning/test) everything combined.

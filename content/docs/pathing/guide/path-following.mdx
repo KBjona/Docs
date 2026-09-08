@@ -1,6 +1,6 @@
 ---
 title: Following a Path
-description: How to follow a path with & without Ivy
+description: How to follow a path with Ivy
 ---
 
 Now that we have a path, we can make the robot follow it.
@@ -9,7 +9,7 @@ If you need help creating Poses, see [Creating a Pose](/docs/pathing/guide/pose-
 
 A path can be followed directly with the `Follower` or by using Ivy.
 
-## With Ivy
+## Following a Path
 
 [Ivy](/docs/ivy) provides a `follow()` command that lets path following be used like any other Ivy command.
 
@@ -65,7 +65,7 @@ The Ivy `follow()` command finishes when the follower is no longer busy.
 </Callout>
 
 <Callout type="warning" title="Using other command libraries">
-We **strongly** recommend using Ivy for its simplicity. Making your own follow command in another library may take time and add bugs. If you are new to Pedro and commands as a whole, we recommend sticking with Ivy. We also recommend using PedroPathing with a command library and not a state machine.
+We **strongly** recommend using Ivy for its simplicity. Creating a custom [follow](/docs/ivy/pedro-commands) command takes time and can introduce bugs. If you are new to Pedro Pathing and command frameworks, stick with Ivy. We also recommend using Pedro Pathing with a command framework rather than a manual state machine.
 </Callout>
 
 ### Next Step

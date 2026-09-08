@@ -1,8 +1,13 @@
 ---
 title: Creating a Path
+description: How to create different paths
 ---
 
-Now that we have two Poses, we can create a path between them.
+<Callout title="Prerequisites" type="warning">
+    This page assumes that you have read and completed the previous step: [Create a Pose](/docs/pathing/guide/pose-creation). Read it if you haven't already.
+</Callout>
+
+Now that we have created two `Pose`s, we can create a `path` between them.
 
 If you need help creating Poses, see [Creating a Pose](/docs/pathing/guide/pose-creation).
 
@@ -32,14 +37,14 @@ private Path park() {
 ```
 
 
-Lets break down the parts of the path quickly
+Let's break down the parts of the path quickly:
 
 `line()` creates a straight path from `startPose` to `park`.
 
-The `.linear()` part is our Interpolation. It changes the robot's heading from the heading of `startPose` to the heading of `park` while it moves along the path. You can play around with this on the visualiser
+The `.linear()` part is our Interpolation. It changes the robot's heading from the heading of `startPose` to the heading of `park` while it moves along the path. You can play around with this on the visualizer.
 
 <Callout title="Tip" type="info">
-    Paths default to **tangtiental** (robot faces the direction it is driving) heading if you don't add any interpolation. See [Interpolation](/docs/pathing/reference/interpolation) for the available options.
+    Paths default to **tangential** heading (robot faces the direction it is driving) if you don't add any interpolation. See [Interpolation](/docs/pathing/reference/interpolation) for the available options.
 </Callout>
 
 ### Creating a Curve
@@ -50,7 +55,7 @@ First, create a control Pose with your other poses:
 
 ```java
 // other poses...
-private final Pose controlPose = poseFactory.of(36, 60, 45);
+private final Pose controlPose = p.of(36, 60, 45);
 ```
 
 Then we can create a curve by adding the `controlPose` in the middle of our other two poses:
