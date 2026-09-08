@@ -1,14 +1,15 @@
 ---
 title: Creating a Pose
+description: How to create poses with PoseFactory
 ---
 
-Now that the follower is set up, we need to define positions for our autonomous.
+<Callout title="Prerequisites" type="warning">
+    This page assumes that you have read and completed the previous step: [Setting Up Your Autonomous](/docs/pathing/guide/setting-up-auto). Read it if you haven't already.
+</Callout>
 
-This guide follows on from the previous one: [Setting Up Your Autonomous](/docs/pathing/guide/setting-up-auto). Read it if you haven't already
+Now that we have our Autonomous class and follower setup, it's time to start pathing. To do this we need Poses. 
 
-Now we have our autonomous class and follower setup, its time to start pathing. To do this we need Poses. 
-
-A `Pose` represents a position and heading on the field using three values: `x`, `y`, and `heading`. We use the [Pedro Coordinates](/docs/pathing/reference/coordinates) system, opposed to the FTC standard one
+A `Pose` represents a position and heading on the field using three values: `x`, `y`, and `heading`. We use the [Pedro Coordinates](/docs/pathing/reference/coordinates) system, as opposed to the standard FTC coordinate system.
 
 ### Creating a PoseFactory
 
@@ -21,10 +22,10 @@ import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 ```
 
-For this guide, we'll use degrees for our heading values. Add this line after where you inititialised your follower
+For this guide, we'll use degrees for our heading values. Add this line after where you initialized your follower
 
 ```java
-public class ExampleAuto implements OpMode {
+public class ExampleAuto extends OpMode {
 
     private Follower follower; // you added this before
     private final PoseFactory p = PoseFactory.degrees(); //add this
