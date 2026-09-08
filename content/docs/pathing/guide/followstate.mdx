@@ -1,5 +1,5 @@
 ---
-title: Following States
+title: Follow States
 description: How to know what the Follower is doing
 ---
 
@@ -7,14 +7,14 @@ In this guide, we will discuss how to know what Pedro is doing and when it has f
 
 ## Follower Mode
 
-The `Follower` has four possible modes at any given time: FOLLOW, HOLD, MANUAL, and IDLE.
+The `Follower` has four possible modes at any given time: `FOLLOW`, `HOLD`, `MANUAL`, and `IDLE`.
 You can get the current mode with `follower.mode()`.
 
-The FOLLOW mode means the `Follower` is following a path autonomously.
-When the path is completed, the Follower automatically switches to mode HOLD to hold a pose, or IDLE if holdEnd is set to false.
+The `FOLLOW` mode means the `Follower` is following a path autonomously.
+When the path is completed, the Follower automatically switches to mode `HOLD` to hold a pose, or `IDLE` if `holdEnd` is set to false.
 
-The IDLE mode means the `Follower` is not currently sending commands to the drive motors,
-while the MANUAL mode means the `Follower` is set to TeleOp driving.
+The `IDLE` mode means the `Follower` is not currently sending commands to the drive motors,
+while the `MANUAL` mode means the `Follower` is set to TeleOp driving.
 
 ### Path Termination
 It is important to know when the `Follower` has finished following the path because this tells you when to follow the next one.
@@ -22,11 +22,11 @@ It is important to know when the `Follower` has finished following the path beca
 The command `!follower.isBusy()` tells you if the `Follower` has finished following the path and has stopped at the target.
 
 If you only care about the `Follower` finishing the path, and not having stopped completely or having a small amount of translational/heading deviation from the target,
-you should use 'follower.atParametricEnd()' instead of `!follower.isBusy()`.
+you should use `follower.atParametricEnd()` instead of `!follower.isBusy()`.
 
 <Callout title="Tip" type="info">
     You can optimize your auto using more lenient conditions for this. I personally like using
-    `Math.abs(follower.tangentialVelocity()) &lt; Constants.foresightConfig.velocityConstraint.get() && follower.distanceToEndpoint() &lt; 4` which seems to work well.
+    `Math.abs(follower.tangentialVelocity()) < Constants.foresightConfig.velocityConstraint.get() && follower.distanceToEndpoint() < 4` which seems to work well.
 </Callout>
 
 ### Follower States
