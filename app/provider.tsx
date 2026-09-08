@@ -10,8 +10,8 @@ export function Provider({children}: { children: ReactNode }) {
         <>
             <Banner variant="rainbow" id="pedro-release">
                 <span className="prose">
-                    <Link className="link prose" href="/docs/pathing">
-                        Pedro 3 has been released! Check out the new tuning and features in the latest version.
+                    <Link className="link prose" href="/docs/pathing/pedro3">
+                        Pedro 3 has been released!
                     </Link>
                 </span>
             </Banner>
