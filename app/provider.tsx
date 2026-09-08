@@ -8,10 +8,10 @@ import Link from "next/link";
 export function Provider({children}: { children: ReactNode }) {
     return (
         <>
-            <Banner variant="rainbow" id="ivy-release">
+            <Banner variant="rainbow" id="pedro-release">
                 <span className="prose">
-                    <Link className="link prose" href="https://doi.org/10.5281/zenodo.20725318">
-                        View the Pedro Pathing White Paper
+                    <Link className="link prose" href="/docs/pathing">
+                        Pedro 3 has been released! Check out the new tuning and features in the latest version.
                     </Link>
                 </span>
             </Banner>
