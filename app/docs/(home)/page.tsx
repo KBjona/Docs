@@ -59,7 +59,7 @@ follower.follow(cycle);`;
                 className="flex items-center justify-center font-medium bg-fd-primary text-fd-primary-foreground hover:opacity-80 transition-opacity h-11 px-6 rounded-full">
                 Get Started
               </Link>
-              <a href="https://github.com/Pedro-Pathing/Pedro3" target="_blank" rel="noreferrer"
+              <a href="https://github.com/Pedro-Pathing/PedroPathing" target="_blank" rel="noreferrer"
                 className="flex gap-2 items-center justify-center font-medium border border-fd-border hover:bg-fd-accent transition-colors h-11 px-6 rounded-full">
                 <svg className="size-5" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <title>GitHub</title>
@@ -77,7 +77,7 @@ follower.follow(cycle);`;
             className="flex items-center justify-center font-medium bg-fd-primary text-fd-primary-foreground hover:opacity-80 transition-opacity h-11 px-6 rounded-full">
             Get Started
           </Link>
-          <a href="https://github.com/Pedro-Pathing/Pedro3" target="_blank" rel="noreferrer"
+          <a href="https://github.com/Pedro-Pathing/PedroPathing" target="_blank" rel="noreferrer"
             className="flex gap-2 items-center justify-center font-medium border border-fd-border hover:bg-fd-accent transition-colors h-11 px-6 rounded-full">
             <svg className="size-5" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <title>GitHub</title>

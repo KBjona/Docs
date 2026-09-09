@@ -11,52 +11,6 @@ import { Callout } from 'fumadocs-ui/components/callout'
   of the motor port each encoder is plugged into, as well as the IMU HardwareMap name and Control Hub orientation.
 </Callout>
 
-## Setup
-
-In `Constants.java`, add an instance of `ThreeWheelIMUConfig`.
-
-```java title="Constants.java"
-public static ThreeWheelIMUConfig localizerConfig = new ThreeWheelIMUConfig(c -> {
-    c.leftEncoderName.set("lf");
-    c.rightEncoderName.set("rr");
-    c.strafeEncoderName.set("lr");
-
-    c.imuName.set("imu");
-    c.imuOrientation.set(new RevHubOrientationOnRobot(
-            RevHubOrientationOnRobot.LogoFacingDirection.UP,
-            RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
-    ));
-
-    c.leftPodY.set(0.0);
-    c.rightPodY.set(0.0);
-    c.strafePodX.set(0.0);
-
-    c.forwardTicksToInches.set(1.0);
-    c.strafeTicksToInches.set(1.0);
-    c.turnTicksToRadians.set(1.0);
-
-    c.leftEncoderDirection.set(Encoder.FORWARD);
-    c.rightEncoderDirection.set(Encoder.FORWARD);
-    c.strafeEncoderDirection.set(Encoder.FORWARD);
-});
-```
-
-The encoder names above are examples. Use the HardwareMap name of the motor port each odometry encoder is plugged into.
-
-Set `imuName` to the HardwareMap name of your IMU. For a Control Hub, this is normally `imu`.
-
-Set `imuOrientation` to match the physical orientation of your Control Hub.
-
-Then use the Three Wheel + IMU localizer in your follower:
-
-```java title="Constants.java"
-return new Follower(
-        new ThreeWheelIMULocalizer(h, localizerConfig),
-        // Drivetrain
-        // Drive Algorithm
-);
-```
-
 ## Automatic Tuning
 
 The Three Wheel + IMU AutoTuner can automatically determine the encoder resolution, encoder directions,
@@ -204,22 +158,6 @@ Set your odometry pod offsets to define where they are relative to your robot's 
   src="/docs/odometry-dark.png"
   alt="Odometry Pod Offset Diagram"
 />
-
-## Encoder Directions
-
-You can also verify the encoder directions manually.
-
-Move the robot forward. The X position should increase.
-
-Move the robot left. The Y position should increase.
-
-If either direction is incorrect, reverse the respective encoder in `ThreeWheelIMUConfig`:
-
-```java title="Constants.java"
-c.leftEncoderDirection.set(Encoder.REVERSE);
-c.rightEncoderDirection.set(Encoder.REVERSE);
-c.strafeEncoderDirection.set(Encoder.REVERSE);
-```
 
 ## Testing the Localizer
 
