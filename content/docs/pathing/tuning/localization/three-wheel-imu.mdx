@@ -22,10 +22,10 @@ public static ThreeWheelIMUConfig localizerConfig = new ThreeWheelIMUConfig(c ->
     c.strafeEncoderName.set("lr");
 
     c.imuName.set("imu");
-    c.imuOrientation.set(new RevHubOrientationOnRobot(
+    c.imu.set(new RevHubIMU(new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.UP,
             RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
-    ));
+    )));
 
     c.leftPodY.set(0.0);
     c.rightPodY.set(0.0);

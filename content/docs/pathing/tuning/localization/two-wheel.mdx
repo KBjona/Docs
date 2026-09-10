@@ -41,10 +41,10 @@ public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
     c.xPodDirection.set(Encoder.FORWARD);
     c.yPodDirection.set(Encoder.FORWARD);
 
-    c.imuOrientation.set(new RevHubOrientationOnRobot(
+    c.imu.set(new RevHubIMU(new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.UP,
-            RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
-    ));
+            RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
+    )));
 });
 ```
 
@@ -253,7 +253,7 @@ c.yPodDirection.set(Encoder.REVERSE);
 
 ### Offsets Identification
 
-Press **Continue**, then rotate the robot in place approximately **180 degrees**.
+Press **Continue**, then rotate the robot **counter-clockwise** in place approximately **180 degrees**.
 
 Try to keep the center of the robot in approximately the same position while
 rotating.
