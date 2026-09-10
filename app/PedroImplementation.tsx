@@ -7,7 +7,7 @@ export default function PedroImplementation() {
     const [latestVersion, setLatestVersion] = useState("x.y.z");
 
     useEffect(() => {
-        fetch("https://api.github.com/repos/Pedro-Pathing/Pedro3/releases/latest")
+        fetch("https://api.github.com/repos/Pedro-Pathing/PedroPathing/releases/latest")
             .then(response => response.json())
             .then(data => {
                 if (data.tag_name) setLatestVersion(data.tag_name.slice(1))})
