@@ -13,18 +13,30 @@ Inside your `Tuning` class, add:
 
 ```java title="Tuning.java"
 @Tuner
-public static Procedure tests() {
-    return new Tests(Constants::create);
-}
+    public static Procedure tests() {
+        return new Tests(hardwareMap -> new Mecanum(hardwareMap, Constants.drivetrainConfig), (hardwareMap -> new PinpointLocalizer(hardwareMap, Constants.localizerConfig)), () -> new Foresight(Constants.foresightConfig));
+    }
 ```
 
-Verify that you have the create method set up correctly, then build/send the updated code to your Robot.
+Verify that you have the create method set up to match your drivetrain and localizer configurations, then build/send the updated code to your Robot.
 
-### Open AutoTune
+## Open AutoTune
 
 While connected to the Robot Controller, open the following address in your browser: http://192.168.43.1:10158
 
 Select **Tests Procedure**.
+
+### Localization Test
+
+This test uses your drivetrain for manual control and your localizer to track the robot's position.
+
+### Driving Test
+
+This test uses your drivetrain for manual control.
+
+### Pose Test
+
+This test uses your localizer to track the robot's position and will display the robot's pose on your telemetry.
 
 ### Hold Test
 
@@ -51,3 +63,7 @@ The default distance is 48 inches.
 ### Interpolation Test
 
 This follows the same path as the Curved Test, but it will use various interpolations.
+
+## Next Steps
+
+Congrats on tuning Pedro Pathing! Now you can move onto [setting up your autonomous](/docs/pathing/guide/setting-up-auto) and creating paths for your robot to follow.

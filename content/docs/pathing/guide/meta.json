@@ -6,8 +6,7 @@
     "path-following",
     "auto-usage",
     "teleop-usage",
-    "troubleshooting",
-    "debugging",
-    "followstate"
+    "follow-state",
+    "debugging"
   ]
 }

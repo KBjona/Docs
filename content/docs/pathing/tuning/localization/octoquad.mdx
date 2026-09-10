@@ -1,21 +1,21 @@
 ---
-title: Octoquad
+title: OctoQuad
 description: A localizer that uses the Digital Chicken Labs OctoQuad MK2 sensor.
 ---
 
 <Callout title="Prerequisites" type="info">
     Ensure that two odometry pods are connected: one that is parallel to the length
     of your chassis (forward) and another that is perpendicular to your chassis length (lateral).
-    Make sure your Octoquad is configured to type `OctoQuadFTC` instead of `OctoQuadFWv3`.
+    Make sure your OctoQuad is configured to type `OctoQuadFTC` instead of `OctoQuadFWv3`.
 </Callout>
 
 <Callout title="Common Mistakes" type="warning">
-    * Make sure the octoquad is plugged into an I2C port **other than port 0**. This is because the Control Hub's built in IMU uses port 0.
+    * Make sure the OctoQuad is plugged into an I2C port **other than port 0**. This is because the Control Hub's built in IMU uses port 0.
 </Callout>
 
 ## Automatic Tuning
 
-The Octoquad AutoTuner can automatically determine your OctoquadConfig, which includes pod ports, directions, offsets, resolution, etc.
+The OctoQuad AutoTuner can automatically determine your OctoQuadConfig, which includes pod ports, directions, offsets, resolution, etc.
 
 ### Add the Tuner
 
@@ -24,7 +24,7 @@ Inside your `Tuning` class, add:
 ```java title="Tuning.java"
 @Tuner
 public static Procedure octoquadTuner() {
-    return new OctoquadTuner();
+    return new OctoQuadTuner();
 }
 ```
 
@@ -34,20 +34,20 @@ Build and send the updated code to your Robot.
 
 While connected to the Robot Controller, open the following address in your browser: http://192.168.43.1:10158
 
-Select **Octoquad Procedure**.
+Select **OctoQuad Procedure**.
 
-### Octoquad Setup
+### OctoQuad Setup
 
-First, enter the **HardwareMap name** of your Octoquad.
+First, enter the **HardwareMap name** of your OctoQuad.
 
-For example, if your Octoquad is named `octoquad` in your Configuration on your Driver Hub, enter:
+For example, if your OctoQuad is named `octoquad` in your Configuration on your Driver Hub, enter:
 
 ```text
 octoquad
 ```
 in the **HardwareMap Name** field.
 
-Then, enter the ports that your forward and strafe pods are plugged into on the Octoquad.
+Then, enter the ports that your forward and strafe pods are plugged into on the OctoQuad.
 
 Next, select the odometry pod type that matches the pods installed on your robot.
 
@@ -98,7 +98,7 @@ The tuner will determine whether the **y pod**, which is the strafe pod, should 
 
 ### Offsets Identification
 
-Press **Continue**, then rotate the robot **counter-clockwise** in place approximately **180 degrees**.
+Press **Continue**, then rotate the robot in place **180 degrees** counterclockwise.
 
 After the robot has completed the rotation, stop the OpMode.
 
@@ -108,9 +108,9 @@ The tuner will automatically calculate the x and y pod offsets.
 
 Once the tuner is complete, open the **Java** tab.
 
-AutoTune will generate an `OctoquadConfig` using the values determined during the tuning procedure.
+AutoTune will generate an `OctoQuadConfig` using the values determined during the tuning procedure.
 
-Copy the generated configuration into the `OctoquadConfig` in your `Constants.java` file.
+Copy the generated configuration into the `OctoQuadConfig` in your `Constants.java` file.
 
 The generated configuration includes:
 
@@ -151,4 +151,4 @@ Congratulations on successfully tuning your localizer!
 
 ## Troubleshooting
 
-If you have any problems, see the [troubleshooting page](/docs/pathing/troubleshooting).
+If you have any problems, see the [troubleshooting page](/docs/pathing/guide/troubleshooting).

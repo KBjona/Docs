@@ -5,70 +5,6 @@ description: A localizer that uses two odometry wheels and a REV Hub IMU
 
 import { Callout } from 'fumadocs-ui/components/callout'
 
-<Callout title="Prerequisites" type="info">
-  Ensure that two odometry pods are connected: one that is parallel to the length
-  of your chassis (forward) and another that is perpendicular to your chassis
-  length (strafe). The pod encoders should be plugged into motor encoder ports on
-  a REV Hub. The REV Hub IMU is used for heading.
-</Callout>
-
-<Callout title="Common Mistakes" type="warning">
-  - Make sure the forward pod is configured as the `xPod`.
-  - Make sure the strafe pod is configured as the `yPod`.
-  - Enter the HardwareMap name of the motor port that the encoder is plugged into.
-  - Make sure the REV Hub IMU orientation matches how the hub is physically mounted.
-  - Moving forward should increase X and moving left should increase Y.
-</Callout>
-
-## Setup
-
-In `Constants.java` inside the `Constants` class, add an instance of
-`TwoWheelConfig`. Make sure to replace the encoder motor names and IMU name with
-the actual HardwareMap names used on your robot.
-
-```java title="Constants.java"
-public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
-    c.xPodName.set("leftFront");
-    c.yPodName.set("rightRear");
-    c.imuName.set("imu");
-
-    c.xPodOffset.set(0.0);
-    c.yPodOffset.set(0.0);
-
-    c.forwardTicksToInches.set(1.0);
-    c.strafeTicksToInches.set(1.0);
-
-    c.xPodDirection.set(Encoder.FORWARD);
-    c.yPodDirection.set(Encoder.FORWARD);
-
-    c.imu.set(new RevHubIMU(new RevHubOrientationOnRobot(
-            RevHubOrientationOnRobot.LogoFacingDirection.UP,
-            RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
-    )));
-});
-```
-
-The offsets, encoder directions, and ticks-to-inches values above are examples.
-These values will depend on your robot.
-
-The forward pod is configured using `xPodName` and the strafe pod is configured
-using `yPodName`.
-
-The pod names should be the HardwareMap names of the motor ports that the
-odometry encoders are connected to.
-
-Then, add `TwoWheelLocalizer` to `create`:
-
-```java title="Constants.java"
-public static Follower create(HardwareMap h) {
-    return new Follower(
-            new TwoWheelLocalizer(h, localizerConfig),
-            // Drivetrain Config
-            // Foresight Config
-    );
-}
-```
-
 ## Automatic Tuning
 
 The Two Wheel AutoTuner can automatically determine your encoder resolutions,
@@ -88,7 +24,7 @@ public static Procedure twoWheelTuner() {
 Make sure `TwoWheelTuner` is imported:
 
 ```java title="Tuning.java"
-import org.firstinspires.ftc.teamcode.pedroPathing.procedures.TwoWheelTuner;
+import org.firstinspires.ftc.teamcode.pedro.procedures.TwoWheelTuner;
 ```
 
 Build and send the updated code to the Robot Controller.
@@ -253,7 +189,7 @@ c.yPodDirection.set(Encoder.REVERSE);
 
 ### Offsets Identification
 
-Press **Continue**, then rotate the robot **counter-clockwise** in place approximately **180 degrees**.
+Press **Continue**, then rotate the robot in place approximately **180 degrees**.
 
 Try to keep the center of the robot in approximately the same position while
 rotating.
@@ -290,126 +226,28 @@ Copy the generated configuration into the `TwoWheelConfig` in your
   values shown on this page.
 </Callout>
 
-## Offsets
+### Manual Offset Tuning
 
-Offsets define where the odometry pods are located relative to the robot's center
-of rotation.
+Offsets can also be found manually using the diagram below. Offsets are in inches.
 
-Offsets can be found **manually** or **automatically**.
-
-- **Automatic**: Use the Two Wheel AutoTuner
-- **Manual**: Use the diagram below
-
-Offsets are in inches.
+Set your odometry pod offsets to define where they are relative to your robot's center of rotation.
 
 <img
-  className="inline-block dark:hidden"
-  src="/docs/odometry-light.png"
-  alt="Odometry Pod Offset Diagram"
+    className="inline-block dark:hidden"
+    src="/docs/odometry-light.png"
+    alt="Odometry Pod Offset Diagram"
 />
 
 <img
-  className="hidden dark:inline-block"
-  src="/docs/odometry-dark.png"
-  alt="Odometry Pod Offset Diagram"
+    className="hidden dark:inline-block"
+    src="/docs/odometry-dark.png"
+    alt="Odometry Pod Offset Diagram"
 />
 
-Once you have found your offsets, add them to your `TwoWheelConfig` using:
+## Troubleshooting
 
-```java title="Constants.java"
-c.xPodOffset.set(...);
-c.yPodOffset.set(...);
-```
-
-<Callout title="Offset Values" type="info">
-  When using the AutoTuner, use the generated `xPodOffset` and `yPodOffset`
-  values directly.
-</Callout>
-
-## Encoder Resolution
-
-Two Wheel localization uses separate encoder resolution values for the forward
-and strafe pods.
-
-The forward pod uses:
-
-```java title="Constants.java"
-c.forwardTicksToInches.set(...);
-```
-
-The strafe pod uses:
-
-```java title="Constants.java"
-c.strafeTicksToInches.set(...);
-```
-
-The Two Wheel AutoTuner can determine both values automatically.
-
-You can also verify the values manually by moving the robot a known distance and
-comparing the actual distance traveled to the distance reported by the localizer.
-
-## Encoder Directions
-
-The Two Wheel AutoTuner can determine both encoder directions automatically.
-
-The forward pod is configured using `xPodDirection`.
-
-```java title="Constants.java"
-c.xPodDirection.set(Encoder.FORWARD);
-```
-
-or:
-
-```java title="Constants.java"
-c.xPodDirection.set(Encoder.REVERSE);
-```
-
-The strafe pod is configured using `yPodDirection`.
-
-```java title="Constants.java"
-c.yPodDirection.set(Encoder.FORWARD);
-```
-
-or:
-
-```java title="Constants.java"
-c.yPodDirection.set(Encoder.REVERSE);
-```
-
-You can also verify the encoder directions manually using the localization test
-under the localization folder in the tuning OpMode.
-
-Move the robot forward. The x coordinate should increase.
-
-Next, move the robot left. The y coordinate should increase.
-
-If the x coordinate changes in the wrong direction, switch `xPodDirection`
-between `FORWARD` and `REVERSE`.
-
-If the y coordinate changes in the wrong direction, switch `yPodDirection`
-between `FORWARD` and `REVERSE`.
-
-## IMU Orientation
-
-Two Wheel localization uses the REV Hub IMU for heading.
-
-Set the HardwareMap name of the IMU using:
-
-```java title="Constants.java"
-c.imuName.set("imu");
-```
-
-Set the Control Hub orientation using:
-
-```java title="Constants.java"
-c.imuOrientation.set(new RevHubOrientationOnRobot(
-        RevHubOrientationOnRobot.LogoFacingDirection.UP,
-        RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
-));
-```
-
-The logo and USB directions must match how the Control Hub is physically mounted
-on your robot.
+If you have any problems, see the
+[troubleshooting page](/docs/pathing/guide/troubleshooting).
 
 ## Testing the Localizer
 
@@ -417,85 +255,3 @@ Once you have completed the tuning steps, you can test your localizer as describ
 [on the localization page](/docs/pathing/tuning/localization#localization-test).
 
 Congratulations on successfully tuning your localizer!
-
-## Troubleshooting
-
-If you have any problems, see the
-[troubleshooting page](/docs/pathing/troubleshooting).
-
-## Complete Example
-
-After completing the tuner, your Two Wheel setup should look similar to the
-following.
-
-<Callout title="Example Values" type="warning">
-  The values below are examples only. Use the values generated for your own robot.
-</Callout>
-
-```java title="Constants.java"
-package org.firstinspires.ftc.teamcode.pedroPathing;
-
-import com.pedropathing.algorithm.Foresight;
-import com.pedropathing.algorithm.ForesightConfig;
-import com.pedropathing.follower.Follower;
-import com.pedropathing.revhub.drivetrains.Mecanum;
-import com.pedropathing.revhub.drivetrains.MecanumConfig;
-import com.pedropathing.revhub.localizers.Encoder;
-import com.pedropathing.revhub.localizers.TwoWheelConfig;
-import com.pedropathing.revhub.localizers.TwoWheelLocalizer;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
-public class Constants {
-
-    public static MecanumConfig driveConfig = new MecanumConfig(c -> {
-        c.frontLeftName.set("leftFront");
-        c.backLeftName.set("leftRear");
-        c.frontRightName.set("rightFront");
-        c.backRightName.set("rightRear");
-
-        c.frontLeftDirection.set(DcMotorSimple.Direction.REVERSE);
-        c.backLeftDirection.set(DcMotorSimple.Direction.REVERSE);
-        c.frontRightDirection.set(DcMotorSimple.Direction.FORWARD);
-        c.backRightDirection.set(DcMotorSimple.Direction.FORWARD);
-
-        c.manualBrakeMode.set(true);
-    });
-
-    public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
-        c.xPodName.set("leftFront");
-        c.yPodName.set("rightRear");
-        c.imuName.set("imu");
-
-        c.xPodOffset.set(0.78);
-        c.yPodOffset.set(-0.30);
-
-        c.forwardTicksToInches.set(0.00201);
-        c.strafeTicksToInches.set(0.00203);
-
-        c.xPodDirection.set(Encoder.REVERSE);
-        c.yPodDirection.set(Encoder.FORWARD);
-
-        c.imuOrientation.set(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
-        ));
-    });
-
-    public static ForesightConfig foresightConfig = new ForesightConfig(c -> {
-    });
-
-    public static Follower create(HardwareMap h) {
-        return new Follower(
-                new TwoWheelLocalizer(h, localizerConfig),
-                new Mecanum(h, driveConfig),
-                new Foresight(foresightConfig)
-        );
-    }
-}
-```
-
-Your drivetrain and Foresight configuration will depend on your robot. The
-important parts for Two Wheel localization are `TwoWheelConfig` and
-`TwoWheelLocalizer`.

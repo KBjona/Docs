@@ -69,7 +69,7 @@ import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 @TeleOp(name = "Example TeleOp")
 public class ExampleTeleOp extends OpMode {
@@ -166,7 +166,7 @@ public void loop() {
     telemetry.addData("Robot X", robotPose.x());
     telemetry.addData("Robot Y", robotPose.y());
     telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading())); 
-    // Math.toDegrees() is a build in java method
+    // Math.toDegrees() is a built-in java method
 }
 ```
 
@@ -174,10 +174,10 @@ public void loop() {
     `follower.pose()` always returns values in inches (`x` and `y`) and radians (`heading`). Make sure to convert your units if you need to using Java's built in `Math` class
 </Callout>
 
-You can use Pose objects in your methods (and subsystems if you use them), and send your robots Pose to them, so you code can use your location (eg. Turrets, making sure you are in a zone)
+You can use Pose objects in your methods (and subsystems if you use them), and send your robot's Pose to them, so you code can use your location (eg. Turrets, making sure you are in a zone)
 
 ### Overriding your position
-While localization in an auto has very little to no drift, that is just 30 seconds. 2 minutes of teleo-op can have a bit of drift. 
+While localization in an auto has very little to no drift, that is just 30 seconds. 2 minutes of Teleop can have a bit of drift. 
 You can update your position using `follower.setPose`. 
 
 Only use this if you either have a way to relocalise (eg. a LimeLight or a camera pipeline), or you know your position (eg. in a corner). 
@@ -206,10 +206,10 @@ public void loop() {
     telemetry.addData("Robot X", robotPose.x());
     telemetry.addData("Robot Y", robotPose.y());
     telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading())); 
-    // Math.toDegrees() is a build in java method
+    // Math.toDegrees() is a built-in java method
 }
 ```
-This code will set our robots position to a corner when we press "Start".
+This code will set our robot's position to a corner when we press "Start".
 
 ### Passing your position from Autonomous to Tele-OP
 Pedro doesn't automatically save your position during Tele-OP. You have to send it from your Autonomous to your Tele-OP manually. Pedro doesn't have a built in way for this, but there are several ways you can do this. For example, a storage class.

@@ -14,7 +14,7 @@ Inside your `Tuning` class, add:
 ```java title="Tuning.java"
 @Tuner
 public static Procedure foresightTuner() {
-    return new ForesightTuner((hardwareMap) -> new PinpointLocalizer(hardwareMap, Constants.localizerConfig), (hardwareMap) -> new Mecanum(hardwareMap, Constants.driveConfig));
+    return new ForesightTuner((hardwareMap) -> new PinpointLocalizer(hardwareMap, Constants.localizerConfig), (hardwareMap) -> new Mecanum(hardwareMap, Constants.drivetrainConfig));
 }
 ```
 
@@ -142,3 +142,7 @@ Copy the generated configuration into the `ForesightConfig` in your `Constants.j
 Once you have completed the tuning steps, you can test your Follower on [testing page](/docs/pathing/tuning/test).
 
 Congratulations on successfully tuning your Follower!
+
+## Next Steps
+
+Now, you can move on to implementing your [constants](/docs/pathing/tuning/constants) into your code.
