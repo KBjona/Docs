@@ -2,33 +2,55 @@
 title: Deceleration
 ---
 
-### Default Deceleration
-This is the default deceleration method that is used if no other method is specified. This deceleration method only decelerates on the last path of a PathChain or on the last. It uses two parameters to control the deceleration behavior:
+Deceleration is controlled by three main parameters that work together to ensure the robot can slow down and stop accurately. Understanding these important for tuning your robot's path following behavior.
 
-#### BrakingStrength
-This controls how strong the braking is. A higher value means stronger braking, while a lower value means gentler braking. The higher the value, the more abrupt the stop will be. The lower the value, the smoother the stop will be. However, a very low value may cause the robot to overshoot the target position.
-This value is a double stored in the PathConstraint class/object and can be set in a PathChain or a Path.
-To set in a PathChain after a path is added: `.setBrakingStrength(double set)`
-To set in a Path: `PATH.setBrakingStrength(double set)`
+## Natural Deceleration
+
+The natural deceleration is the maximum braking power your robot can apply in any direction, based on its motor and wheel setup.
+
+### Natural Forward Deceleration
+Measured in units per second² (units/sec²), this represents the maximum deceleration the robot can achieve when moving forward or backward.
+
+- **Configuration**: `naturalForwardDeceleration`
+- **Type**: `ConfigVar<Double>` (required)
+- **Units**: units/sec²
+- **Purpose**: Used to calculate how far the robot will coast when no power is applied, and to estimate excess velocity after coasting through remaining path distance
+
+### Natural Strafe Deceleration
+Measured in units per second² (units/sec²), this represents the maximum deceleration the robot can achieve when strafing.
+
+- **Configuration**: `naturalStrafeDeceleration`
+- **Type**: `ConfigVar<Double>` (required)
+- **Units**: units/sec²
+- **Purpose**: Similar to forward deceleration, but applied to sideways movement
 
 <Callout title="Note" type="info">
-  - BrakingStrength was formerly known as **Zero Power Acceleration Multiplier (ZPAM)** in earlier versions of Pedro Pathing
-  - A BrakingStrength of 1 corresponds to a ZPAM of 4.
+  The algorithm adjusts braking power based on which way the robot is moving, allowing for accurate deceleration regardless of the robot's movement direction.
 </Callout>
 
-### Global Deceleration
-This allows deceleration based on a entire PathChain and not only the last path of the chain. This is especially useful if the last path in the chain is short. Note that this mode is recommended for use globally, even when path chains are only one path, because it is more optimized than the default mode. Settings like BrakingStrength still take effect here as normal.
+## Maximum Deceleration Constraint
 
-To set in a PathChain: `.setGlobalDeceleration(double BrakingStrength)` or `.setGlobalDeceleration()`
+The maximum deceleration constraint is an optional limit on how much deceleration the robot can apply during path following. This is useful when you want to limit the robot's deceleration rate, such as to avoid aggressive stops that might cause the robot to tip.
 
-#### BrakingStart
-This controls when the braking starts. The higher the value, the earlier the braking starts. The lower the value, the later the braking starts. A very high value may cause the robot to stop too early, while a very low value may cause the robot to stop too late.
+- **Configuration**: `maxDecelerationConstraint`
+- **Type**: `ConfigVar<Double>`
+- **Default**: `Constraint.NONE` (unconstrained/infinity)
+- **Units**: units/sec²
+- **Purpose**: Limits maximum deceleration, this is used to ensure the robot can still reach its target within the remaining path distance
 
-BrakingStart is recommended to be used primarily for optimization, not for mitigating overshoot.
+### How It Works
+When the constraint is active (not set to `Constraint.NONE`), the algorithm:
+1. Checks if the robot can stop within the remaining path distance using this deceleration limit
+2. Calculates the velocity needed to coast down to the target velocity
+3. Reduces the target velocity if necessary to ensure the robot can stop in time
 
-To set in a PathChain (only used with Global Deceleration): `.setBrakingStart(double set)`
+If the deceleration constraint is too restrictive, the robot may not be able to stop at the exact target position.
 
-### No Deceleration
-This disables deceleration for the entire path chain, allowing full speed at the end of the path chain. Though, this may cause overshoot and inaccuracy at the end of the path chain.
+## How Deceleration Parameters Work Together
 
-To set in a PathChain: `.setNoDeceleration()`
+The Foresight algorithm uses these three parameters in four steps:
+
+1. **Coasting**: The robot coasts (applies no power) to naturally decelerate based on `naturalForwardDeceleration` and `naturalStrafeDeceleration`
+2. **Distance Calculation**: It measures the remaining distance to the target to find the speed needed to stop on time.
+3. **Constraint Application**: If `maxDecelerationConstraint` is set, it checks if the robot can slow down accurately within that limit.
+4. **Velocity Adjustment**: If necessary, it lowers the target speed so the robot stops accurately within the remaining distance.

@@ -1,12 +1,9 @@
 {
   "pages": [
-    "setup",
-    "swerve",
+    "drivetrain",
     "localization",
-    "velocity",
-    "heading",
-    "drive-algorithm",
-    "tests",
-    "troubleshooting"
+    "foresight",
+    "constants",
+    "test"
   ]
 }

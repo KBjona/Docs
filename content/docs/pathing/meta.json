@@ -1,18 +1,15 @@
 {
   "pages": [
     "index",
+    "prerequisites",
     "installation",
-    "dashboard",
-    "constants",
     "tuning",
-    "troubleshooting",
-    "pedro-v-roadrunner",
+    "faq",
+    "pedro3",
+    "---Guide---",
+    "...guide",
     "---Reference---",
     "...reference",
-    "---Custom---",
-    "...custom",
-    "---Examples---",
-    "...examples",
     "---Other---",
     "branding"
   ],

@@ -2,7 +2,9 @@
 title: Pedro Commands
 ---
 
-Ivy includes built-in commands for controlling your robot's movement using
+import { Callout } from 'fumadocs-ui/components/callout'
+
+Ivy includes built-in commands for controlling the robot's movement using
 [Pedro Pathing](https://pedropathing.com). To use them, add the following
 static import:
 
@@ -10,72 +12,42 @@ static import:
 import static com.pedropathing.ivy.pedro.PedroCommands.*;
 ```
 
-All Pedro commands take a `Follower` as their first argument. Usually your Follower
-is one created from your `Constants` file's `createFollower()` method.
+All Pedro commands take a `Follower` as their first argument. Usually, your `Follower`
+is one created using the `create()` method in your [**Constants**](/docs/pathing/tuning/constants) file. 
+Pedro commands return regular Ivy `Command`s, so they work just like any other Ivy command.
+
+<Callout title="Note" type="info">
+    This page is compatible with Pedro 3. See the [Pedro Pathing](/docs/pathing) docs for more information.
+</Callout>
 
 ## Follow
 
-Makes the robot follow a `PathChain`. The command finishes when the follower
-is no longer busy (i.e. the path is complete).
+Makes the robot follow a [`Path`](/docs/pathing/reference/api). The command finishes as soon as
+the follower stops actively tracking the path (`follower.following()` becomes `false`).
 
 ```java
 Command goToBasket = follow(follower, basketPath);
 ```
 
-You can optionally specify whether the robot should hold its position at the
-end of the path, and a maximum power between 0 and 1:
-
-```java
-Command goToBasket = follow(follower, pickupCloseSpikemark, true);          // hold at end
-Command goToBasket = follow(follower, pickupCloseSpikemark, 0.5);           // cap max power at half
-Command goToBasket = follow(follower, pickupCloseSpikemark, true, 0.5);     // both
-```
-
-If you don't pass `holdEnd`, it defaults to your follower's
-`automaticHoldEnd` setting. If you don't pass `maxPower`, it defaults to
-the follower's current max power.
+<Callout title="Note on Heading Interpolation" type="info">
+    `follow()` executes the [path](/docs/pathing/guide/path-creation) using the [interpolation](/docs/pathing/reference/interpolation) method that was defined when the [Path](/docs/pathing/guide/path-creation) was created.
+</Callout>
 
 ## Hold
 
-Makes the robot hold a position. The command finishes when the robot is
-within tolerance of the target (based on translational and heading error).
+Makes the robot go to a [position](/docs/pathing/guide/pose-creation) and then hold it. The robot will hold the position until it is tasked to do something else.
+If no position is sent the robot will hold its current position.
 
-To hold the robot's current position:
+To hold the current position:
 
 ```java
-Command stayHere = hold(follower);
+Command holdAtPosition = hold(follower);
 ```
 
-To hold a specific pose:
+To hold a specific position:
 
 ```java
-Command holdAtBasket = hold(follower, new Pose(50, 30, Math.toRadians(90)));
-```
-
-You can also pass custom `PathConstraints` to control how tight the
-completion tolerance is:
-
-```java
-Command preciseHold = hold(follower, targetPose, new PathConstraints(
-    0.995,  // tValueConstraint
-    100     // timeoutConstraint (ms)
-));
-```
-
-## Turn To
-
-Makes the robot turn in place to a specified heading (in radians). The
-command finishes when the follower is no longer busy.
-
-```java
-Command faceForward = turnTo(follower, Math.toRadians(0));
-Command faceLeft = turnTo(follower, Math.toRadians(90));
-```
-
-As with `hold`, you can pass custom `PathConstraints`:
-
-```java
-Command preciseTurn = turnTo(follower, Math.toRadians(180), customConstraints);
+Command holdAtGoal = hold(follower, p.of(120, 80, 0));
 ```
 
 ## Composing Pedro Commands
@@ -86,12 +58,11 @@ everything else. For example:
 ```java
 Command auto = sequential(
     follow(follower, shootPreloads),
-    Shooter.shoot(), // the shoot method here would be a command
+    Shooter.shoot(), // Call the shoot Command.
     instant(() -> claw.open()),
-    parallel(
+    parallel( // Follow the path while running the intake.
         follow(follower, pickupCloseSpikemark),
         instant(() -> intake.activate())
     )
-/* ... */
 );
 ```

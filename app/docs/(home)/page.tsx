@@ -21,24 +21,18 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
 
-  const code = `path = follower.pathBuilder()
-  .addPath(
-    new BezierLine(scorePose, pickupPose)
-  )
-  .setLinearHeadingInterpolation(
-    scorePose.getHeading(),
-    pickupPose.getHeading()
-  )
-  .addPath(
-    new BezierLine(pickupPose, scorePose)
-  )
-  .setLinearHeadingInterpolation(
-    pickupPose.getHeading(),
-    scorePose.getHeading()
-  )
-  .build();
+  const code = `PoseFactory factory = PoseFactory.degrees();
+  
+Pose score = factory.of(60, 90, 135);
+Pose control = factory.of(40, 50, 180);
+Pose intake = factory.of(30, 60, 180);
+  
+Path cycle = path(
+  curve(score, control, intake).linear(score, intake),
+  line(intake, score).constant(intake)
+);
 
-follower.followPath(path);`;
+follower.follow(cycle);`;
 
   return (
     <main className="flex flex-col items-center px-6">
