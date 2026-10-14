@@ -5,44 +5,37 @@ description: How AutoTune works
 
 ### What is AutoTune
 
-AutoTune is a Pedro Pathing tool that combines the tuning process into a single browser interface. Instead of switching between multiple standalone OpModes on the Driver Station, you can run, track, and configure all your tuning procedures from a single place.
+AutoTune is an automatic tuning tool for Pedro Pathing that makes the process of tuning your robot's constants way easier, faster and simpler.
 
 <Callout title="Note" type="info">
-  AutoTune is included out of the box with Pedro Pathing, so there's no additional setup required.
+  AutoTune should already be installed if you followed the steps at [installation](/docs/pathing/installation) correctly.
 </Callout>
 
 ### How AutoTune Works
 
-AutoTune uses `Sloth` to locate and run your `@Tuner` procedures.
+AutoTune uses `Sloth` to find your `@Tuner` procedures.
 
-It has two components:
+AutoTune has two parts:
 
-- **The Robot Side:** A library running on your Robot Controller that handles tuner discovery and serves the web UI.
-- **The Web Tuner:** A browser interface where you select tuners, enter parameters, confirm steps, and view live feedback.
+- **The Robot Part:** A library running on your Robot Controller finds your `@Tuner` procedures and then runs them for the tuning.
+- **The Web Part:** A website where you select which tuner you want to use and enter values, confirm steps and get the finished constants.
 
-#### How It Runs
+### How to Start Tuning
 
-1. **Discovery:** On app startup, `Sloth` scans your project for static methods marked with `@Tuner`.
-2. **Web Server:** AutoTune starts an HTTP server (port `10158`) and a WebSocket server (port `12649`) on the Robot Controller.
-3. **Execution:** Selecting a tuner in the web UI launches its `Procedure` on its own thread. Only one tuner runs at a time.
-4. **Interaction:** During a run, a procedure can pause for confirmation, ask for input, or start a tuning OpMode automatically without needing the Driver Station.
-5. **Results:** After finishing, the web tuner displays the tuned parameters with ready to copy code snippets.
-
-### Opening the Web Tuner
-
-1. Build and push your code to the Robot Controller.
-2. Connect your computer to the Robot Controller's WiFi network.
-3. Open `http://192.168.43.1:10158` in your browser.
+1. Add `@Tuner` procedures to your `Tuning` class.
+2. Build and push your code to the Robot Controller.
+3. Connect to the Robot Controller's WiFi network.
+4. Open `http://192.168.43.1:10158` in your browser.
 
 ### Compatibility with Other Libraries
 
-Since AutoTune relies on `Sloth` for method discovery, tools that interfere with class scanning like FTC Dashboard or Panels can cause issues.
+Since AutoTune uses `Sloth` to find the `@Tuner` procedures, different libraries that mess with class scanning like FTC Dashboard or Panels can cause problems.
 
-If you use those libraries:
+If you do use something that has problems with `Sloth` then you need to either:
 
-- Switch to a [`Sloth`-compatible version](https://github.com/Dairy-Foundation/Sloth#ftc-dashboard).
-- Tune your robot with AutoTune first, then uninstall it when you're done.
+- Switch to a [compatible version](https://github.com/Dairy-Foundation/Sloth#ftc-dashboard) if one exists.
+- Tune your robot with AutoTune first, and once you are done remove it.
 
 <Callout title="Removing AutoTune" type="warning">
-  Removing the `com.pedropathing:tuning` dependency alone will cause build errors. You also need to remove every `Tuning` class and any references to `@Tuner` or `Procedure`.
+  To remove AutoTune you will need to remove the `implementation 'com.pedropathing:tuning'` dependency and make sure you have deleted everything that uses AutoTune from the code.
 </Callout>
